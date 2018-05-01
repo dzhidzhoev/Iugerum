@@ -9,7 +9,7 @@ typedef struct _syntax_tree_node {
 	number num;
 } syntax_tree_node;
 
-void free_syntax_tree(syntrax_tree_node *tree);
+void free_syntax_tree(syntax_tree_node *tree);
 
 syntax_tree_node *parse_input(void);
 

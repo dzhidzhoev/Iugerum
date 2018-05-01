@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void free_syntax_tree(syntrax_tree_node *tree) {
+void free_syntax_tree(syntax_tree_node *tree) {
 	if (!tree) return;
-	free_syntax_tree(tree->left);
-	free_syntax_tree(tree->right);
+	free_syntax_tree(tree->first);
+	free_syntax_tree(tree->second);
 	free(tree);
 }
 
