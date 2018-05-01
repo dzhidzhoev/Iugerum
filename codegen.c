@@ -1,6 +1,7 @@
 #include "codegen.h"
 
 #include <stdlib.h>
+#include <stdint.h>
 
 static void generate_code_ft_rec(syntax_tree_node *tree,
 	FILE *out,
@@ -25,10 +26,10 @@ static void generate_code_ft_rec(syntax_tree_node *tree,
 	{
 		union {
 			double d;
-			unsigned long ul;
+			uint64_t u64;
 		} value;
 		value.d = tree->num;
-		fprintf(out, "    push qword 0x%lx\n", value.ul);
+		fprintf(out, "    push qword 0x%llx\n", value.u64);
 		fprintf(out, "    fld qword[esp+%u]\n", esp-8);
 		fprintf(out, "    add esp, 8\n");
 		return;
