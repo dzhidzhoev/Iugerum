@@ -10,11 +10,11 @@ int main(int argc, char *argv[]) {
 	fscanf(spec, "%lf%lf", &x, &x);
 	set_lexer_input(spec);
 	
-	printf("Compiling first function...\n"); // todo: remove this
+// 	printf("Compiling first function...\n");
 	syntax_tree_node *tree1 = parse_input();
-	printf("Compiling second function...\n");
+// 	printf("Compiling second function...\n");
 	syntax_tree_node *tree2 = parse_input();
-	printf("Compiling third function...\n");
+// 	printf("Compiling third function...\n");
 	syntax_tree_node *tree3 = parse_input();
 	
 	FILE *out = fopen("code.asm", "w");

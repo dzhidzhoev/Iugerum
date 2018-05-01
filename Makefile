@@ -1,3 +1,5 @@
+
+
 compiler: codegen.o parser.o lexer.o compiler.c
 	gcc -DSPEC_FILE="\"$(SPEC_FILE)\"" compiler.c codegen.o parser.o lexer.o -o compiler
 

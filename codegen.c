@@ -22,10 +22,17 @@ static void generate_code_ft_rec(syntax_tree_node *tree,
 		fprintf(out, "    fld qword[ebp+8]\n");
 		return;
 	case TOKEN_NUMBER:
-		fprintf(out, "    push qword %f\n", tree->num);
+	{
+		union {
+			double d;
+			unsigned long ul;
+		} value;
+		value.d = tree->num;
+		fprintf(out, "    push qword 0x%lx\n", value.ul);
 		fprintf(out, "    fld qword[esp+%u]\n", esp-8);
 		fprintf(out, "    add esp, 8\n");
 		return;
+	}
 	case TOKEN_E:
 		fprintf(out, "    fldl2e\n");
 		fprintf(out, "    f2xm1\n");
@@ -118,7 +125,6 @@ void generate_code(syntax_tree_node *tree1,
 					syntax_tree_node *tree2, 
 					syntax_tree_node *tree3,
 					FILE *assembly_output) {
-	printf("ASSEMBLY_OUTPUT %p\n", assembly_output); // todo: remove this
 	fprintf(assembly_output, "section .text\n");
 	fprintf(assembly_output, "global f1, f2\n");
 	fprintf(assembly_output, "f1:\n");
