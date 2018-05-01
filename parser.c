@@ -3,6 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void free_syntax_tree(syntrax_tree_node *tree) {
+	if (!tree) return;
+	free_syntax_tree(tree->left);
+	free_syntax_tree(tree->right);
+	free(tree);
+}
+
 static int op_stack_capacity = 0;
 static int op_stack_sz = 0;
 static syntax_tree_node **op_stack;
@@ -32,7 +39,7 @@ syntax_tree_node* op_stack_pop(void) {
 
 void op_stack_clear(void) {
 	for (int i = 0; i < op_stack_sz; i++) {
-		free(op_stack[i]);
+		free_syntax_tree(op_stack[i]);
 	}
 	op_stack_sz = 0;
 }
