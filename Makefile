@@ -1,3 +1,6 @@
+codegen.o: codegen.c
+	gcc codegen.c -c -o codegen.o
+
 parser.o: parser.c
 	gcc parser.c -c -o parser.o
 
@@ -10,4 +13,4 @@ lexer.o: lexer.c
 	gcc lexer.c -c -o lexer.o
 	
 clean:
-	rm lexer.o parser.o lex-test
+	rm lexer.o parser.o codegen.o lex-test
