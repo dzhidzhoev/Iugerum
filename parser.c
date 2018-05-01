@@ -18,8 +18,19 @@ int op_stack_size(void) {
 	return op_stack_sz;
 }
 
+static void debug_op_stack_print() {
+	printf("STACK DUMP\n");
+	for (int i = 0; i < op_stack_sz; i++) {
+		printf("%p\n", op_stack[i]);
+	}
+	printf("END STACK DUMP\n");
+}
+
 void op_stack_push(syntax_tree_node *node) {
 	if (op_stack_sz >= op_stack_capacity) {
+		if (op_stack_capacity == 0) {
+			op_stack_capacity = 1;
+		}
 		op_stack_capacity *= 2;
 		op_stack = realloc(op_stack, 
 			op_stack_capacity * sizeof(*op_stack));
@@ -46,6 +57,7 @@ void op_stack_clear(void) {
 
 syntax_tree_node *parse_input(void) {
 	next_token();
+	if (current_token() == TOKEN_EOF) next_token();
 	while (current_token() != TOKEN_EOF) {
 		syntax_tree_node *new_node = malloc(
 							sizeof(syntax_tree_node));

@@ -1,3 +1,6 @@
+compiler: codegen.o parser.o lexer.o compiler.c
+	gcc -DSPEC_FILE="\"$(SPEC_FILE)\"" compiler.c codegen.o parser.o lexer.o -o compiler
+
 codegen.o: codegen.c
 	gcc codegen.c -c -o codegen.o
 
@@ -13,4 +16,4 @@ lexer.o: lexer.c
 	gcc lexer.c -c -o lexer.o
 	
 clean:
-	rm lexer.o parser.o codegen.o lex-test
+	rm lexer.o parser.o codegen.o lex-test compiler code.asm
