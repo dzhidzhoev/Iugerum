@@ -2,6 +2,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+syntax_tree_node* alloc_syntax_tree_node(void) {
+	syntax_tree_node *t = calloc(1, sizeof(*t));
+	t->op = TOKEN_EOF;
+	return t;
+}
+
+syntax_tree_node* clone_syntax_tree(syntax_tree_node *tree) {
+	if (!tree) return NULL;
+	syntax_tree_node *n = malloc(sizeof(*tree));
+	memcpy(n, tree, sizeof(*n));
+	n->first = clone_syntax_tree(tree->first);
+	n->second = clone_syntax_tree(tree->second);
+	return n;
+}
 
 void free_syntax_tree(syntax_tree_node *tree) {
 	if (!tree) return;

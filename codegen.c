@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include "differentiator.h"
 
 static void generate_code_ft_rec(syntax_tree_node *tree,
 	FILE *out,
@@ -122,6 +123,16 @@ void generate_code_from_tree(syntax_tree_node *tree,
 	generate_code_ft_rec(tree, assembly_output, 8, 0);
 }
 
+static void generate_code_func_prologue(FILE *assembly_output) {
+	fprintf(assembly_output, "push ebp\n");
+	fprintf(assembly_output, "mov ebp, esp\n");
+}
+
+static void generate_code_func_epilogue(FILE *assembly_output) {
+	fprintf(assembly_output, "leave\n");
+	fprintf(assembly_output, "ret\n");
+}
+
 void generate_code(syntax_tree_node *tree1, 
 					syntax_tree_node *tree2, 
 					syntax_tree_node *tree3,
@@ -129,21 +140,27 @@ void generate_code(syntax_tree_node *tree1,
 	fprintf(assembly_output, "section .text\n");
 	fprintf(assembly_output, "global f1, f2\n");
 	fprintf(assembly_output, "f1:\n");
-	fprintf(assembly_output, "push ebp\n");
-	fprintf(assembly_output, "mov ebp, esp\n");
+	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree1, assembly_output);
-	fprintf(assembly_output, "leave\n");
-	fprintf(assembly_output, "ret\n");
+	generate_code_func_epilogue(assembly_output);
 	fprintf(assembly_output, "f2:\n");
-	fprintf(assembly_output, "push ebp\n");
-	fprintf(assembly_output, "mov ebp, esp\n");
+	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree2, assembly_output);
-	fprintf(assembly_output, "leave\n");
-	fprintf(assembly_output, "ret\n");
+	generate_code_func_epilogue(assembly_output);
 	fprintf(assembly_output, "f3:\n");
-	fprintf(assembly_output, "push ebp\n");
-	fprintf(assembly_output, "mov ebp, esp\n");
+	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree3, assembly_output);
-	fprintf(assembly_output, "leave\n");
-	fprintf(assembly_output, "ret\n");
+	generate_code_func_epilogue(assembly_output);
+	fprintf(assembly_output, "g1:\n");
+	generate_code_func_prologue(assembly_output);
+	generate_code_from_tree(differentiate(tree1), assembly_output);
+	generate_code_func_epilogue(assembly_output);	
+	fprintf(assembly_output, "g2:\n");
+	generate_code_func_prologue(assembly_output);
+	generate_code_from_tree(differentiate(tree2), assembly_output);
+	generate_code_func_epilogue(assembly_output);	
+	fprintf(assembly_output, "g3:\n");
+	generate_code_func_prologue(assembly_output);
+	generate_code_from_tree(differentiate(tree3), assembly_output);
+	generate_code_func_epilogue(assembly_output);	
 }
