@@ -30,7 +30,9 @@ static void generate_code_ft_rec(syntax_tree_node *tree,
 			uint64_t u64;
 		} value;
 		value.d = tree->num;
-		fprintf(out, "    push qword 0x%llx\n", value.u64);
+// 		fprintf(out, "    push qword 0x%llx\n", value.u64); // only in 64-bit mode
+		fprintf(out, "    push dword 0x%x\n", (uint32_t)(value.u64 >> 32));
+		fprintf(out, "    push dword 0x%x\n", (uint32_t)value.u64);
 		fprintf(out, "    fld qword[esp+%u]\n", esp-8);
 		fprintf(out, "    add esp, 8\n");
 		return;

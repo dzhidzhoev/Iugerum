@@ -1,7 +1,13 @@
+roots.o: roots.c
+	gcc roots.c -c -o roots.o
 
+code.o: compiler
+	./compiler
+	nasm -fmacho32 -o code.o -w-number-overflow code.asm 
 
 compiler: codegen.o parser.o lexer.o compiler.c differentiator.o
 	gcc -DSPEC_FILE="\"$(SPEC_FILE)\"" compiler.c differentiator.o codegen.o parser.o lexer.o -o compiler
+	chmod +x compiler
 
 differentiator.o: differentiator.c
 	gcc differentiator.c -c -o differentiator.o
@@ -21,4 +27,4 @@ lexer.o: lexer.c
 	gcc lexer.c -c -o lexer.o
 	
 clean:
-	rm lexer.o parser.o codegen.o lex-test compiler code.asm differentiator.o
+	rm lexer.o parser.o codegen.o lex-test compiler code.asm differentiator.o code.asm code.o roots.o
