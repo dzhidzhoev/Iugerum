@@ -33,7 +33,7 @@ static void generate_code_ft_rec(syntax_tree_node *tree,
 // 		fprintf(out, "    push qword 0x%llx\n", value.u64); // only in 64-bit mode
 		fprintf(out, "    push dword 0x%x\n", (uint32_t)(value.u64 >> 32));
 		fprintf(out, "    push dword 0x%x\n", (uint32_t)value.u64);
-		fprintf(out, "    fld qword[esp+%u]\n", esp-8);
+		fprintf(out, "    fld qword[ebp+%u]\n", esp-8);
 		fprintf(out, "    add esp, 8\n");
 		return;
 	}
@@ -88,21 +88,21 @@ static void generate_code_ft_rec(syntax_tree_node *tree,
 	// two-operand operations
 	esp -= 8;
 	fprintf(out, "    sub esp, 8\n");
-	fprintf(out, "    fstp qword[esp+%u]\n", esp);
+	fprintf(out, "    fstp qword[ebp+%u]\n", esp);
 	generate_code_ft_rec(tree->second, out, stackDepth, esp);
 
 	switch (tree->op) {
 	case TOKEN_PLUS:
-		fprintf(out, "    fadd qword[esp+%u]\n", esp);
+		fprintf(out, "    fadd qword[ebp+%u]\n", esp);
 		break;
 	case TOKEN_MINUS:
-		fprintf(out, "    fsubr qword[esp+%u]\n", esp);
+		fprintf(out, "    fsubr qword[ebp+%u]\n", esp);
 		break;
 	case TOKEN_MUL:
-		fprintf(out, "    fmul qword[esp+%u]\n", esp);
+		fprintf(out, "    fmul qword[ebp+%u]\n", esp);
 		break;
 	case TOKEN_DIV:
-		fprintf(out, "    fdivr qword[esp+%u]\n", esp);
+		fprintf(out, "    fdivr qword[ebp+%u]\n", esp);
 		break;
 	case TOKEN_X:
 	case TOKEN_NUMBER:	

@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 				sscanf(argv[6], "%lf", &eps);
 				double x = root(f[fnum1 - 1], f[fnum2 - 1], g[fnum1 - 1], g[fnum2 - 1],
 								a, b, eps);
-				printf("Root is %f\n", x);
+				printf("Root is %.30f\n", x);
 				printf("Iterations count: %d\n", last_root_call_num_steps);
 			} else {
 				fprintf(stderr, "Incorrect number of arguments for -root command!\n");

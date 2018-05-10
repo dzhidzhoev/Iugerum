@@ -16,7 +16,6 @@ double root(math_function f1, math_function f2, math_function g1, math_function 
 		// chord
 		double new = left - calc(f1, f2, left) * (right - left) 
 					/ (calc(f1, f2, right) - calc(f1, f2, left));
-		printf("new: %f\n", new);
 		if (signbit(calc(f1, f2, new)) == signbit(calc(f1, f2, left))) {
 			left = new;
 		} else {
@@ -25,9 +24,9 @@ double root(math_function f1, math_function f2, math_function g1, math_function 
 		
 		// tangent
 		if (fabs(calc(g1, g2, left)) > fabs(calc(g1, g2, right))) {
-			right = right - calc(f1, f2, right) / calc(g1, g2, right);
-		} else {
 			left = left - calc(f1, f2, left) / calc(g1, g2, left);
+		} else {
+			right = right - calc(f1, f2, right) / calc(g1, g2, right);
 		}
 		last_root_call_num_steps++;
 	}
