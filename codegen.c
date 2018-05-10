@@ -124,13 +124,13 @@ void generate_code_from_tree(syntax_tree_node *tree,
 }
 
 static void generate_code_func_prologue(FILE *assembly_output) {
-	fprintf(assembly_output, "push ebp\n");
-	fprintf(assembly_output, "mov ebp, esp\n");
+	fprintf(assembly_output, "    push ebp\n");
+	fprintf(assembly_output, "    mov ebp, esp\n");
 }
 
 static void generate_code_func_epilogue(FILE *assembly_output) {
-	fprintf(assembly_output, "leave\n");
-	fprintf(assembly_output, "ret\n");
+	fprintf(assembly_output, "    leave\n");
+	fprintf(assembly_output, "    ret\n");
 }
 
 void generate_code(syntax_tree_node *tree1, 
@@ -138,7 +138,7 @@ void generate_code(syntax_tree_node *tree1,
 					syntax_tree_node *tree3,
 					FILE *assembly_output) {
 	fprintf(assembly_output, "section .text\n");
-	fprintf(assembly_output, "global f1, f2\n");
+	fprintf(assembly_output, "global f1, f2, f3, g1, g2, g3\n");
 	fprintf(assembly_output, "f1:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree1, assembly_output);

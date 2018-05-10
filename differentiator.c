@@ -10,6 +10,7 @@ syntax_tree_node* differentiate(syntax_tree_node *tree) {
 		tree->num = 1;
 	} else if (tree->op == TOKEN_NUMBER || tree->op == TOKEN_PI 
 		|| tree->op == TOKEN_E) {
+		tree->op = TOKEN_NUMBER;
 		tree->num = 0;
 	} else if (tree->op == TOKEN_PLUS || tree->op == TOKEN_MINUS) {
 		tree->first = differentiate(tree->first);

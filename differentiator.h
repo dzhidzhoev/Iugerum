@@ -3,6 +3,7 @@
 
 #include "parser.h"
 
+// modifies tree, making it to calculate derivative of given function
 syntax_tree_node* differentiate(syntax_tree_node *tree);
 
 #endif
