@@ -1,5 +1,5 @@
-roots.o: roots.c
-	gcc roots.c -c -o roots.o
+all: main.c roots.c code.o
+	gcc main.c -mtune=i386 -mfpmath=387 -mno-sse roots.c code.o -o iugerum
 
 code.o: compiler
 	./compiler
@@ -27,4 +27,4 @@ lexer.o: lexer.c
 	gcc lexer.c -c -o lexer.o
 	
 clean:
-	rm lexer.o parser.o codegen.o lex-test compiler code.asm differentiator.o code.asm code.o roots.o
+	rm lexer.o parser.o codegen.o lex-test compiler code.asm differentiator.o code.asm code.o iugerum

@@ -140,28 +140,35 @@ void generate_code(syntax_tree_node *tree1,
 					syntax_tree_node *tree3,
 					FILE *assembly_output) {
 	fprintf(assembly_output, "section .text\n");
-	fprintf(assembly_output, "global f1, f2, f3, g1, g2, g3\n");
+	fprintf(assembly_output, "global f1, f2, f3, g1, g2, g3, _f1, _f2, _f3, "
+								"_g1, _g2, _g3\n");
 	fprintf(assembly_output, "f1:\n");
+	fprintf(assembly_output, "_f1:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree1, assembly_output);
 	generate_code_func_epilogue(assembly_output);
 	fprintf(assembly_output, "f2:\n");
+	fprintf(assembly_output, "_f2:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree2, assembly_output);
 	generate_code_func_epilogue(assembly_output);
 	fprintf(assembly_output, "f3:\n");
+	fprintf(assembly_output, "_f3:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(tree3, assembly_output);
 	generate_code_func_epilogue(assembly_output);
 	fprintf(assembly_output, "g1:\n");
+	fprintf(assembly_output, "_g1:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(differentiate(tree1), assembly_output);
 	generate_code_func_epilogue(assembly_output);	
 	fprintf(assembly_output, "g2:\n");
+	fprintf(assembly_output, "_g2:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(differentiate(tree2), assembly_output);
 	generate_code_func_epilogue(assembly_output);	
 	fprintf(assembly_output, "g3:\n");
+	fprintf(assembly_output, "_g3:\n");
 	generate_code_func_prologue(assembly_output);
 	generate_code_from_tree(differentiate(tree3), assembly_output);
 	generate_code_func_epilogue(assembly_output);	

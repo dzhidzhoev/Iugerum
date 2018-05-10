@@ -91,8 +91,8 @@ syntax_tree_node *parse_input(void) {
 		case TOKEN_MINUS:
 		case TOKEN_MUL:
 		case TOKEN_DIV:
-			new_node->first = op_stack_pop();
 			new_node->second = op_stack_pop();
+			new_node->first = op_stack_pop();
 			break;
 		case TOKEN_X:
 		case TOKEN_E:
