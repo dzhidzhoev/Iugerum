@@ -1,6 +1,8 @@
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "functions.h"
 #include "integral.h"
@@ -15,25 +17,61 @@ math_function g[3] = {
 
 // these variables must be declared in code.asm
 extern double left_border, right_border;
+const double eps = 0.001;
 
-double find_area(double eps, bool print_inters, bool print_iter_count) {
-	double f1f2 = root(f1, f2, g1, g2, left_border, right_border, eps / 10);
+static int cmp_double(const void *_l, const void *_r) {
+	const double *l = _l;
+	const double *r = _r;
+	if (fabs(*l - *r) < eps) {
+		return 0;
+	}
+	if (*l > *r)
+		return 1;
+	return -1;
+}
+
+// structure describing function value in some point,
+// and what function has this value
+typedef struct {
+		double y;
+		int f_num;
+} function_value;
+
+static int cmp_function_value(const void *l, const void *r) {
+	return cmp_double(&((function_value*)l)->y, &((function_value*)r)->y);
+}
+
+static double find_area(const double eps, bool print_inters, bool print_iter_count) {
+	double x[3];
+	x[0] = root(f1, f2, g1, g2, left_border, right_border, eps / 10);
 	if (print_iter_count) {
 		printf("Finding intersections of f1 and f2 took %u iterations.\n", last_root_call_num_steps);
 	}
-	double f1f3 = root(f1, f3, g1, g3, left_border, right_border, eps / 10);
+	x[1] = root(f1, f3, g1, g3, left_border, right_border, eps / 10);
 	if (print_iter_count) {
 		printf("Finding intersections of f1 and f3 took %u iterations.\n", last_root_call_num_steps);
 	}
-	double f2f3 = root(f2, f3, g2, g3, left_border, right_border, eps / 10);
+	x[2] = root(f2, f3, g2, g3, left_border, right_border, eps / 10);
 	if (print_iter_count) {
 		printf("Finding intersections of f2 and f2 took %u iterations.\n", last_root_call_num_steps);
 	}
 	if (print_inters) {
-		printf("f1 and f2 intersect at x = %.10f\n", f1f2);
-		printf("f1 and f3 intersect at x = %.10f\n", f1f3);
-		printf("f2 and f3 intersect at x = %.10f\n", f2f3);
+		printf("f1 and f2 intersect at x = %.10f\n", x[0]);
+		printf("f1 and f3 intersect at x = %.10f\n", x[1]);
+		printf("f2 and f3 intersect at x = %.10f\n", x[2]);
 	}
+	qsort(x, 3, sizeof(x[0]), cmp_double);
+	double mid1 = (x[0] + x[1]) / 2, mid2 = (x[1] + x[2]) / 2;
+	// find upper and lower functions on [x_0; x_1]
+	function_value f_x[3];
+	f_x[0].y = f[0](mid1);
+	f_x[0].f_num = 0;
+	f_x[1].y = f[1](mid1);
+	f_x[1].f_num = 1;
+	f_x[2].y = f[2](mid1);
+	f_x[2].f_num = 2;
+	qsort(f_x, 3, sizeof(f_x[0]), cmp_function_value);
+	
 }
 
 int main(int argc, char *argv[]) {
@@ -83,7 +121,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	double area = find_area(0.001, print_intersections, print_iterations_count);
+	double area = find_area(eps, print_intersections, print_iterations_count);
 
 	return 0;
 }
