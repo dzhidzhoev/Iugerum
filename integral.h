@@ -3,6 +3,6 @@
 
 #include "functions.h"
 
-double integral(math_function *f, double a, double b, double eps);
+double integral(math_function f, double a, double b, double eps);
 
 #endif
