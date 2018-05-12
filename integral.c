@@ -14,6 +14,6 @@ double integral(math_function f, double a, double b, double eps) {
 		for (int i = 0; i < n; i++) {
 			second += len / 6 * (f(i * len) + f(i * len + len) + 4 * f(i * len + len / 2));
 		}
-	} while (fabs(first - second) >= eps);
+	} while (1.0 / 15.0 * fabs(first - second) >= eps);
 	return second;
 }
