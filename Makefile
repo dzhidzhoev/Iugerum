@@ -1,5 +1,5 @@
 all: main.c roots.c code.o
-	gcc -mno-sse -mtune=i386 -mfpmath=387 main.c roots.c integral.c code.o -o iugerum
+	gcc -mno-sse -m32 -mfpmath=387 main.c roots.c integral.c code.o -o iugerum
 
 code.o: compiler
 	./compiler
