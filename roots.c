@@ -31,7 +31,6 @@ double root(math_function f1, math_function f2, math_function g1, math_function 
 			right = right - calc(f1, f2, right) / calc(g1, g2, right);
 		}
 		last_root_call_num_steps++;
-		printf("%.5f %.5f\n", fabs(left), fabs(right)); // todo: remove this
 	}
 	return (left + right) / 2;
 }

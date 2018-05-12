@@ -71,8 +71,8 @@ static double find_area(const double eps, bool print_inters, bool print_iter_cou
 	// area on [x_0; x_1]
 	double seg1_f1_val = f[x[0].fnum_1]((x[0].x + x[1].x) / 2);
 	double seg1_f2_val = f[x[0].fnum_2]((x[0].x + x[1].x) / 2);
-	double f2_int1 = integral(f[x[0].fnum_2], x[0].x, x[1].x, eps / 10);
 	printf("Integrating %d from %.5f to %.5f...\n", x[0].fnum_1, x[0].x, x[1].x);
+	double f2_int1 = integral(f[x[0].fnum_2], x[0].x, x[1].x, eps / 10);
 	double f1_int1 = integral(f[x[0].fnum_1], x[0].x, x[1].x, eps / 10);
 	double seg1_area = f2_int1 - f1_int1;
 	printf("Segment 1[%.5f;%.5f] functions: %d %d\n", x[0].x, x[1].x, x[0].fnum_1, x[0].fnum_2);
