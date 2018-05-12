@@ -138,7 +138,13 @@ static void generate_code_func_epilogue(FILE *assembly_output) {
 void generate_code(syntax_tree_node *tree1, 
 					syntax_tree_node *tree2, 
 					syntax_tree_node *tree3,
+					double left_border,
+					double right_border,
 					FILE *assembly_output) {
+	fprintf(assembly_output, "section .data\n");
+	fprintf(assembly_output, "global left_border, right_border\n");
+	fprintf(assembly_output, "    left_border dq %f\n", left_border);
+	fprintf(assembly_output, "    right_border dq %f\n", right_border);
 	fprintf(assembly_output, "section .text\n");
 	fprintf(assembly_output, "global f1, f2, f3, g1, g2, g3, _f1, _f2, _f3, "
 								"_g1, _g2, _g3\n");

@@ -6,8 +6,8 @@
 
 int main(int argc, char *argv[]) {
 	FILE *spec = fopen(SPEC_FILE, "r");
-	double x;
-	fscanf(spec, "%lf%lf", &x, &x);
+	double a, b;
+	fscanf(spec, "%lf%lf", &a, &b);
 	set_lexer_input(spec);
 	
 // 	printf("Compiling first function...\n");
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 	syntax_tree_node *tree3 = parse_input();
 	
 	FILE *out = fopen("code.asm", "w");
-	generate_code(tree1, tree2, tree3, out);
+	generate_code(tree1, tree2, tree3, a, b, out);
 	fclose(out);
 	
 	fclose(spec);

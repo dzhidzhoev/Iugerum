@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-static double calc(math_function f1, math_function f2, double x) {
+static inline double calc(math_function f1, math_function f2, double x) {
 	return f1(x) - f2(x);
 }
 
