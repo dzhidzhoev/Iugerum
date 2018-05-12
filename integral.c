@@ -3,7 +3,7 @@
 #include <math.h>
 
 double integral(math_function f, double a, double b, double eps) {
-	unsigned n = 1;
+	unsigned n = 1000;
 	double first, second = (b - a) / 6 * (f(a) + 4 * f((b - a) / 2) + f(b));
 	do {
 		first = second;
