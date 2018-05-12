@@ -71,12 +71,10 @@ static double find_area(const double eps, bool print_inters, bool print_iter_cou
 	// area on [x_0; x_1]
 	double seg1_f1_val = f[x[0].fnum_1]((x[0].x + x[1].x) / 2);
 	double seg1_f2_val = f[x[0].fnum_2]((x[0].x + x[1].x) / 2);
-	printf("Integrating %d from %.5f to %.5f...\n", x[0].fnum_1, x[0].x, x[1].x);
 	double f2_int1 = integral(f[x[0].fnum_2], x[0].x, x[1].x, eps / 10);
 	double f1_int1 = integral(f[x[0].fnum_1], x[0].x, x[1].x, eps / 10);
 	double seg1_area = f2_int1 - f1_int1;
 	printf("Segment 1[%.5f;%.5f] functions: %d %d\n", x[0].x, x[1].x, x[0].fnum_1, x[0].fnum_2);
-	printf("Integrals on segment 1: %.5f %.5f\n", f1_int1, f2_int1);
 	if (seg1_f1_val > seg1_f2_val) {
 		seg1_area = - seg1_area;
 	}
@@ -96,7 +94,7 @@ static double find_area(const double eps, bool print_inters, bool print_iter_cou
 int main(int argc, char *argv[]) {
 	bool print_intersections = false, print_iterations_count = false;
 	if (argc > 1) {
-		if (strcmp(argv[1], "root") == 0) {
+		if (strcmp(argv[1], "-root") == 0) {
 			if (argc == 7) {
 				int fnum1, fnum2;
 				double a, b, eps;
@@ -114,7 +112,7 @@ int main(int argc, char *argv[]) {
 				fprintf(stderr, "Incorrect number of arguments for -root command!\n");
 				return 1;
 			}
-		} else if (strcmp(argv[1], "integral") == 0) {
+		} else if (strcmp(argv[1], "-integral") == 0) {
 			if (argc == 6) {
 				int fnum1;
 				double a, b, eps;
@@ -129,6 +127,28 @@ int main(int argc, char *argv[]) {
 				fprintf(stderr, "Incorrect number of arguments for -integral command!\n");
 				return 1;
 			}
+		} else if (strcmp(argv[1], "-help") == 0) {
+			printf("Iugerum - program, calculating areas.\n"
+					"Usage: iugerum [-help|-root <function 1> <function 2> <a> <b> <eps>|\n"
+					"		|-integral <function> <a> <b> <eps>|\n"
+					"		| [ [--print-intersections] [--print-iter-count] ]]\n"
+					"\n"
+					"Modes:\n"
+					"*default* 	-	calculates area of figure within graphs of 3 functions\n"
+					"				on a segment\n" 
+					"-help		-	prints this reference\n"
+					"-root		-	calculates intersection of <function 1> and <function 2>\n"
+					"				on segment [<a>;<b>] with <eps> tolerance\n"
+					"-integral	-	calculates integral of <function> from <a> to <b> with\n"
+					"				<eps> tolerance\n"
+					"\n"
+					"Options (when default mode is on):\n"
+					"--print-intersections  - prints intersection points of three figures\n"
+					"--print-iter-count     - prints iterations count spent to find intersection\n"
+					"                         points of three functions\n"
+					"\n");
+					
+			return 0;
 		} else {
 			for (int i = 1; i < argc; i++) {
 				if (strcmp(argv[i], "--print-intersections") == 0) {
@@ -141,7 +161,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	double area = find_area(eps, print_intersections, print_iterations_count);
-	printf("%.5f\n", area);
+	printf("Area: %.5f\n", area);
 
 	return 0;
 }

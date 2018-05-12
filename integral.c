@@ -14,7 +14,6 @@ double integral(math_function f, double a, double b, double eps) {
 		for (int i = 0; i < n; i++) {
 			second += len / 6 * (f(a + i * len) + f(a + i * len + len) + 4 * f(a + i * len + len / 2));
 		}
-		printf("Step %d: %.5f\n", n, second); // todo: remove this
 	} while (1.0 / 15.0 * fabs(first - second) >= eps);
 	return second;
 }
