@@ -28,16 +28,17 @@ static char *next_string(void) {
 		ch = fgetc(input_file);
 	} while (ch == ' ' || ch == '\t');
 	
-	do {
-		str[i] = ch;
-		if (++i == capacity) {
-			capacity *= 2;
-			str = realloc(str, capacity);
-		}
-	} while (ch != EOF && (ch = fgetc(input_file)) != EOF && !isspace(ch));
+	if (ch != '\n' && ch != '\r') {
+		do {
+			str[i] = ch;
+			if (++i == capacity) {
+				capacity *= 2;
+				str = realloc(str, capacity);
+			}
+		} while (ch != EOF && (ch = fgetc(input_file)) != EOF && !isspace(ch));
+	}
 	if (ch == '\n' || ch == '\r' || ch == EOF) is_eof = true;
 	str[i] = 0;
-	
 	return str;
 }
 
@@ -46,9 +47,7 @@ static TOKEN_TYPE current_token_internal(void) {
 		is_eof = false;
 		return TOKEN_EOF;
 	}
-	
 	char *str = next_string();
-	
 	if (strcmp("cos", str) == 0) {
 		free(str);	
 		return TOKEN_COS;
@@ -97,6 +96,7 @@ static TOKEN_TYPE current_token_internal(void) {
 		free(str);
 		return TOKEN_NUMBER;
 	}
+	is_eof = false;
 	free(str);
 	return TOKEN_EOF;
 }
