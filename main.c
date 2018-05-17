@@ -71,8 +71,8 @@ static double find_area(const double eps, bool print_inters, bool print_iter_cou
 	// area on [x_0; x_1]
 	double seg1_f1_val = f[x[0].fnum_1]((x[0].x + x[1].x) / 2);
 	double seg1_f2_val = f[x[0].fnum_2]((x[0].x + x[1].x) / 2);
-	double f2_int1 = integral(f[x[0].fnum_2], x[0].x, x[1].x, eps / 10);
-	double f1_int1 = integral(f[x[0].fnum_1], x[0].x, x[1].x, eps / 10);
+	double f2_int1 = integral(f[x[0].fnum_2], x[0].x, x[1].x, eps / 100);
+	double f1_int1 = integral(f[x[0].fnum_1], x[0].x, x[1].x, eps / 100);
 	double seg1_area = f2_int1 - f1_int1;
 	printf("Segment 1[%.5f;%.5f] functions: %d %d\n", x[0].x, x[1].x, x[0].fnum_1, x[0].fnum_2);
 	if (seg1_f1_val > seg1_f2_val) {
@@ -81,8 +81,8 @@ static double find_area(const double eps, bool print_inters, bool print_iter_cou
 	// area on [x_1; x_2]
 	double seg2_f1_val = f[x[2].fnum_1]((x[1].x + x[2].x) / 2);
 	double seg2_f2_val = f[x[2].fnum_2]((x[1].x + x[2].x) / 2);
-	double seg2_area = integral(f[x[2].fnum_2], x[1].x, x[2].x, eps / 10)
-					- integral(f[x[2].fnum_1], x[1].x, x[2].x, eps / 10);
+	double seg2_area = integral(f[x[2].fnum_2], x[1].x, x[2].x, eps / 100)
+					- integral(f[x[2].fnum_1], x[1].x, x[2].x, eps / 100);
 	printf("Segment 2[%.5f;%.5f] functions: %d %d\n", x[1].x, x[2].x, x[2].fnum_1, x[2].fnum_2);
 	if (seg2_f1_val > seg2_f2_val) {
 		seg2_area = - seg2_area;
